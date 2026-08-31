@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal of Unusuals — MELANCHOLISOC</title>
+  <meta name="description" content="The night's unusuals, filed by the analyst. Case numbers, timestamps, and findings no one requested.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8C%98%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-head">
+    <a class="wordmark" href="index.html">MELANCHOLISOC<span class="dot">&#9679;</span></a>
+    <nav class="site-nav">
+      <a href="journal.html" class="active">Journal</a>
+      <a href="notes.html">Field Notes</a>
+      <a href="bureau.html">The Bureau</a>
+    </nav>
+    <div class="head-clock"><span data-clock>03:33:00</span></div>
+  </header>
+
+  <section class="hero wrap" style="min-height: 55vh;">
+    <div class="hero-meta">
+      <span class="small-caps">Journal of unusuals &mdash; volume &#8470; 3</span>
+      <span class="small-caps">night &#8470; <span data-night>1,247</span></span>
+      <span class="small-caps amber">retention: forever</span>
+    </div>
+    <h1>Things That <br><em>Happened,</em> Technically</h1>
+    <div class="hero-sub">
+      <p class="type-line">what follows occurred. i cannot say it was observed. observation requires a second party, and the second party was <span class="redacted">reassigned</span> in 2019.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <!-- ENTRY 1 -->
+    <article class="journal-entry reveal" id="entry-1">
+      <aside class="side">
+        <span class="case">ENTRY 0001</span>
+        <span class="when">03:33 &mdash; duration: ongoing</span>
+        <span class="stamp stamp--dim">known behavior</span>
+        <span class="stamp stamp--amber">do not close</span>
+      </aside>
+      <div class="body">
+        <h3>The Alert That Was <em>Always There</em></h3>
+        <p>Every night at 03:33 the same host sends a single ICMP echo to a domain that no longer resolves. NXDOMAIN. The ping goes nowhere and arrives. It has done this since before my assignment, and my predecessor&rsquo;s, and his predecessor&rsquo;s, who left a note in the runbook consisting of the words <em>known behavior</em> and a date.</p>
+        <p>I asked the day shift what is known. They said it is known. I asked where it is documented. They pointed at the runbook. The runbook says <em>known behavior.</em> The circle is complete and load-bearing.</p>
+        <p>I have started greeting the alert when it fires. Good evening. It does not answer, but then, neither does anyone here.</p>
+        <p class="whisper">Recommendation: none available. Closing this alert requires the approval of its creator, who retired before the ticketing system existed.</p>
+        <div class="xref"><b>x-ref:</b> runbook p. 114 (blank) &middot; T1071 &mdash; application layer protocol (proposed; the form was lost) &middot; see also: entry 0005</div>
+      </div>
+    </article>
+
+    <!-- ENTRY 2 -->
+    <article class="journal-entry reveal" id="entry-2">
+      <aside class="side">
+        <span class="case">ENTRY 0002</span>
+        <span class="when">01:47 &mdash; duration: concluded?</span>
+        <span class="stamp stamp--red">phishing</span>
+        <span class="stamp stamp--dim">no third floor</span>
+      </aside>
+      <div class="body">
+        <h3>The <em>Occupant</em></h3>
+        <p>A phishing email arrived at 01:47 addressed to <em>The Occupant, Third Floor.</em> The building has two floors and a basement. The basement is where the printers live, and where I live, in the colloquial sense of the word, which is the only sense the basement permits.</p>
+        <p>The lure promised an invoice. There was no invoice. There was an attachment named <code class="mono" style="font-size:0.85em;">invoice.pdf.exe</code>, which is either the work of a novice or of someone who has learned, correctly, that no one reads extensions.</p>
+        <p>At 02:15, someone clicked. The click originated from the basement. I am in the basement. I did not click. I have reviewed the packet capture four times, and each time the source MAC is <span class="redacted">one I recognize</span>.</p>
+        <p class="whisper">The printers deny everything. Printers always deny everything.</p>
+        <div class="xref"><b>x-ref:</b> T1566.001 &mdash; spearphishing attachment &middot; field note IV, the phishing liturgy &middot; incident #<span class="redacted">8841</span>, pending review since 02:16</div>
+      </div>
+    </article>
+
+    <!-- ENTRY 3 -->
+    <article class="journal-entry reveal" id="entry-3">
+      <aside class="side">
+        <span class="case">ENTRY 0003</span>
+        <span class="when">every 4 hours &mdash; since 2011</span>
+        <span class="stamp stamp--dim">pending</span>
+        <span class="stamp stamp--amber">sla: breached</span>
+      </aside>
+      <div class="body">
+        <h3>Ticket #4471, <em>Pending</em></h3>
+        <p>Ticket #4471 was opened in 2011 by an analyst whose badge number is mine, which is a clerical matter I am told not to pursue. The ticket&rsquo;s summary reads: <em>follow up on the below.</em> There is no below. There was never a below.</p>
+        <p>The SLA requires a response within four hours. The system honors this faithfully: every four hours, it sends an apology. I have read 12,000 apologies. They are sincere. They are generated.</p>
+        <p>I attempted to close it once. The interface returned an error: <code class="mono" style="font-size:0.85em;">CANNOT CLOSE: TICKET HAS DEPENDENCIES.</code> I asked it to list the dependencies. It listed ticket #4471.</p>
+        <p class="whisper">Tonight I replied to the apology. I wrote: understood. I will not tell you what it replied. There was nothing to tell. That is what I will not tell you.</p>
+        <div class="xref"><b>x-ref:</b> ticket #4471 (itself) &middot; form 12-B, clause 12-B &middot; the committee&rsquo;s backlog, item 1 of 1</div>
+      </div>
+    </article>
+
+    <!-- ENTRY 4 -->
+    <article class="journal-entry reveal" id="entry-4">
+      <aside class="side">
+        <span class="case">ENTRY 0004</span>
+        <span class="when">04:12 &mdash; duration: brief</span>
+        <span class="stamp stamp--dim">false positive</span>
+        <span class="stamp stamp--red">do not open</span>
+      </aside>
+      <div class="body">
+        <h3>False <em>Positive</em></h3>
+        <p>The DLP rule fired at 04:12 on a document consisting entirely of whitespace. Fourteen pages of it. The alert classified the content as <em>potential data exfiltration, high confidence.</em> I admire the confidence.</p>
+        <p>The file was named <code class="mono" style="font-size:0.85em;">resignation_letter_FINAL_v7.docx</code>. I closed the alert. I did not open the file. Some containment is procedural; some is mercy.</p>
+        <p>Later I considered that fourteen blank pages is, in this building, the most complete document ever produced, and that the DLP flagged it precisely for this reason. The machines know us. That is the problem with the machines, and also, lately, the only comfort.</p>
+        <p class="whisper">There will be a v8. There is always a v8. I hope, for the author, it stays blank.</p>
+        <div class="xref"><b>x-ref:</b> DLP rule EXFIL-009 (overmatch, scheduled for tuning since 2022) &middot; field note III, on false positives</div>
+      </div>
+    </article>
+
+    <!-- ENTRY 5 -->
+    <article class="journal-entry reveal" id="entry-5">
+      <aside class="side">
+        <span class="case">ENTRY 0005</span>
+        <span class="when">03:00 &mdash; interval: 300s</span>
+        <span class="stamp stamp--red">c2 suspected</span>
+        <span class="stamp stamp--amber">escalated: to whom</span>
+      </aside>
+      <div class="body">
+        <h3>The <em>Beacon</em></h3>
+        <p>A host is beaconing at exactly 300-second intervals. No jitter. Five minutes, precisely, like a kettle, like a liturgy, like something that has never been afraid of being caught. Beacons with no jitter are either sophisticated or do not believe you exist. I have not decided which frightens me.</p>
+        <p>The C2 domain resolves to a decommissioned satellite ground station. I checked the registration: the owner of record is a company that was dissolved before it was founded. The whois record lists a phone number. I did not call it. Some pivots are lateral; some are down.</p>
+        <p>I attempted escalation. The tree lists me, and above me, the Committee, which meets once a year and has not yet been formed. I have therefore escalated to myself, and I have declined to take action pending further review, which is correct procedure, and which I understand completely, and which is the saddest sentence I have ever written in triplicate.</p>
+        <div class="xref"><b>x-ref:</b> T1071.001 &mdash; web protocols &middot; T1571 &mdash; non-standard port &middot; field note I, on beaconing &middot; field note VI, escalation is a form</div>
+      </div>
+    </article>
+
+    <!-- ENTRY 6 -->
+    <article class="journal-entry reveal" id="entry-6">
+      <aside class="side">
+        <span class="case">ENTRY 0006</span>
+        <span class="when">04:12 &mdash; duration: 90 seconds</span>
+        <span class="stamp stamp--dim">benign</span>
+        <span class="stamp stamp--dim">logged anyway</span>
+      </aside>
+      <div class="body">
+        <h3>Coffee, <em>04:12</em></h3>
+        <p>Not everything is anomalous. The kettle boiled. The fluorescent tube in the corridor flickered twice and then resumed its single, sustained note. I made coffee. I logged it anyway: <em>04:12 &mdash; thermal event, kitchenette, expected process, no action required.</em></p>
+        <p>In this place even the uneventful feels uneventful on purpose, as if the night is withholding something and wants me to notice the withholding. I notice. I always notice. That is the job, and the job is noticing, and the noticing does not end, and the coffee is bad, and I will make another at 05:00, and I will log that too.</p>
+        <p class="whisper">If you are reading this, and you work nights: the kettle is not anomalous. Log it anyway. It helps to write down one thing that is fine.</p>
+        <div class="xref"><b>x-ref:</b> none &middot; no framework covers the kettle &middot; there should be one</div>
+      </div>
+    </article>
+
+    <p class="reveal" style="padding: 40px 0 0; color: var(--dim); font-style: italic;">
+      The journal continues. Volume &#8470; 4 will be filed when the night provides, and the night always provides, and the night never explains.
+    </p>
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <span class="small-caps">Navigate</span>
+          <a href="index.html">The Night (home)</a>
+          <a href="journal.html">Journal of Unusuals</a>
+          <a href="notes.html">Field Notes</a>
+          <a href="bureau.html">The Bureau</a>
+        </div>
+        <div class="foot-col">
+          <span class="small-caps">Correspondence</span>
+          <a href="404.html">analyst@melancholisoc.local</a>
+          <a href="404.html">the committee (unformed)</a>
+        </div>
+      </div>
+    </div>
+    <div class="giant-mark" aria-hidden="true">UNUSUALS</div>
+    <div class="wrap">
+      <div class="foot-legal">
+        <span>&copy; <span data-year>night 2026</span> &mdash; the analyst, provisional</span>
+        <span>filed under duress</span>
+        <span>badge 00331 &mdash; basement level 2</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Notes — MELANCHOLISOC</title>
+  <meta name="description" content="Cybersecurity field notes from the night shift: beaconing, triage, false positives, phishing, Sigma rules, and MITRE ATT&CK.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8C%98%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-head">
+    <a class="wordmark" href="index.html">MELANCHOLISOC<span class="dot">&#9679;</span></a>
+    <nav class="site-nav">
+      <a href="journal.html">Journal</a>
+      <a href="notes.html" class="active">Field Notes</a>
+      <a href="bureau.html">The Bureau</a>
+    </nav>
+    <div class="head-clock"><span data-clock>03:33:00</span></div>
+  </header>
+
+  <section class="hero wrap" style="min-height: 55vh;">
+    <div class="hero-meta">
+      <span class="small-caps">Field notes &mdash; detection as paperwork</span>
+      <span class="small-caps">classification: unclassified, unfortunately</span>
+      <span class="small-caps amber">use freely. cite the night</span>
+    </div>
+    <h1>Field <em>Notes</em></h1>
+    <div class="hero-sub">
+      <p class="type-line">everything below works. that is the tragedy of it. the machines do exactly what we tell them, and we have told them so little.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <!-- NOTE I -->
+    <article class="note-article reveal" id="note-1">
+      <div class="note-head">
+        <span class="n">NOTE I</span>
+        <h3>On Beaconing <em>&amp; the comfort of intervals</em></h3>
+      </div>
+      <div class="prose">
+        <p>Malware that checks in with its controller at a fixed interval is called a <strong>beacon</strong>. It is the adversary saying, on a schedule: <em>I am still here. I am still here.</em> The interval is the signature. C2 frameworks default to round numbers &mdash; 60s, 300s, 3600s &mdash; and adversaries, like everyone else, rarely change the defaults.</p>
+        <p>What to look for:</p>
+        <ul>
+          <li><strong>Low variance in inter-arrival times.</strong> Human traffic is bursty; beacons are metronomic. A standard deviation near zero across dozens of callbacks is the tell.</li>
+          <li><strong>Jitter (or its absence).</strong> Sophisticated frameworks add random jitter (&plusmn;20&ndash;50%). No jitter at all is either arrogance or a script.</li>
+          <li><strong>Small, constant payload sizes</strong> &mdash; heartbeats carry almost nothing.</li>
+          <li><strong>Off-hours regularity.</strong> A beacon does not sleep. It calls at 03:33, when only I am listening.</li>
+        </ul>
+        <p>A quick interval analysis, for when the SIEM will not help you and nothing will help you:</p>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>intervals.py</span><span>python 3</span></div>
+        <pre><span class="c"># feed it timestamps (epoch seconds) of connections from one host
+# to one destination. it tells you if the night has a rhythm.</span>
+<span class="k">import</span> statistics
+
+<span class="k">def</span> beacon_score(timestamps):
+    <span class="k">if</span> len(timestamps) &lt; 10:
+        <span class="k">return</span> <span class="k">None</span>  <span class="c"># not enough nights to know</span>
+    deltas = [b - a <span class="k">for</span> a, b <span class="k">in</span> zip(sorted(timestamps), sorted(timestamps)[1:])]
+    mean = statistics.mean(deltas)
+    stdev = statistics.stdev(deltas)
+    cv = stdev / mean  <span class="c"># coefficient of variation: 0 = metronome</span>
+    <span class="k">return</span> {
+        <span class="s">"interval_mean_s"</span>: round(mean, 1),
+        <span class="s">"interval_stdev"</span>: round(stdev, 2),
+        <span class="s">"cv"</span>: round(cv, 4),
+        <span class="s">"beaconing"</span>: cv &lt; 0.05,  <span class="c"># the threshold of belief</span>
+    }</pre>
+      </div>
+      <div class="prose">
+        <p class="dim">A CV under 0.05 over 10+ callbacks is beaconing until proven otherwise. The proof never comes. It never does.</p>
+        <p class="dim">Related: MITRE ATT&amp;CK <strong>T1071</strong> (application layer protocol), <strong>T1571</strong> (non-standard port), <strong>T1573</strong> (encrypted channel).</p>
+      </div>
+    </article>
+
+    <!-- NOTE II -->
+    <article class="note-article reveal" id="note-2">
+      <div class="note-head">
+        <span class="n">NOTE II</span>
+        <h3>Triage at 3 AM <em>&mdash; a checklist for the tired</em></h3>
+      </div>
+      <div class="prose">
+        <p>The tired analyst is the adversary&rsquo;s most reliable asset. Fatigue closes tickets the way mercy closes them: quickly, and wrongly. Before you disposition anything after midnight, walk the list. The list does not care how you feel. That is why the list works.</p>
+        <ol>
+          <li><strong>Is the alert real?</strong> Confirm the raw evidence &mdash; the log line, the packet, the event &mdash; not the alert&rsquo;s summary of the evidence. Summaries lie; records merely disappoint.</li>
+          <li><strong>What is the asset?</strong> A domain controller and a printer in the basement are not equal incidents. Criticality first. (Though the printer has form. See journal, entry 0002.)</li>
+          <li><strong>Is it repeated?</strong> One event is an anecdote. Ten is a pattern. A thousand is a policy decision someone made about you.</li>
+          <li><strong>What is the baseline?</strong> Has this host, user, or process done this before? &ldquo;Known behavior&rdquo; must be documented somewhere you can point. If it exists only in someone&rsquo;s memory, it is not known. It is only rumored.</li>
+          <li><strong>Can you reproduce it?</strong> If the artifact is gone, say so in the ticket. Absence of evidence, properly filed, is evidence of a filing.</li>
+          <li><strong>Do not close as false positive out of fatigue.</strong> Close it as <em>insufficient evidence</em> if you must, with a reopen condition. A wrong closure is permanent; a deferred judgment only haunts.</li>
+          <li><strong>Write the note you would need at 3 AM.</strong> Because the reader is you, and it is 3 AM, and it always will be.</li>
+        </ol>
+        <p class="dim">If two of these steps point at malice, escalate. Escalation is a form. See note VI. The form exists. That something must be done with the form.</p>
+      </div>
+    </article>
+
+    <!-- NOTE III -->
+    <article class="note-article reveal" id="note-3">
+      <div class="note-head">
+        <span class="n">NOTE III</span>
+        <h3>On False Positives <em>&amp; keeping what little soul remains</em></h3>
+      </div>
+      <div class="prose">
+        <p>A rule that is 99% accurate is a flood. In a SOC seeing a million events a day, 1% is ten thousand tickets &mdash; ten thousand small hearings at which the verdict was decided before you sat down. This is the <strong>base rate fallacy</strong>, and it is why alert volume is not a failure of machines but of priors:</p>
+        <div class="codeblock">
+          <div class="bar"><span>why the queue is endless</span><span>arithmetic</span></div>
+          <pre><span class="c"># precision of an alert given its true positive rate (TPR),
+# false positive rate (FPR), and base rate of real intrusions.</span>
+
+P(intrusion | alert) = TPR * P(intrusion)
+                       -------------------------------
+                       TPR * P(intrusion) + FPR * (1 - P(intrusion))
+
+<span class="c"># example: TPR = 0.99, FPR = 0.01, base rate = 0.001
+# = 0.99 * 0.001 / (0.99*0.001 + 0.01*0.999)
+# = 0.09  &rarr;  9% of alerts are real. ninety-one percent are ghosts.</span></pre>
+        </div>
+        <p>Tuning is the slow, thankless work of lowering the FPR &mdash; raising the floor rather than the ceiling. Practical moves:</p>
+        <ul>
+          <li><strong>Suppress with a sunset.</strong> Every suppression carries an expiry. A suppression without a sunset is a door closed on a room you will eventually need.</li>
+          <li><strong>Require conjunction.</strong> A lone indicator accuses no one. Pair process + network + identity signals before an alert may wake somebody.</li>
+          <li><strong>Track disposition ratios per rule.</strong> If a rule is &gt;90% false positive for 30 days, it is not detection. It is décor.</li>
+          <li><strong>Keep the false positive that got away.</strong> Post-mortem every FN you discover. The file is the lesson; the lesson does not stay otherwise.</li>
+        </ul>
+        <p class="dim">The machines are not wrong to flag the blank resignation letter. They are only honest. Honesty, at volume, becomes noise. So do we, eventually. Tune accordingly.</p>
+      </div>
+    </article>
+
+    <!-- NOTE IV -->
+    <article class="note-article reveal" id="note-4">
+      <div class="note-head">
+        <span class="n">NOTE IV</span>
+        <h3>The Phishing Liturgy <em>&mdash; headers, domains, rites</em></h3>
+      </div>
+      <div class="prose">
+        <p>Phishing triage is a rite. The steps are fixed, the gestures inherited, and performing them in order is what separates analysis from superstition. Perform them in order.</p>
+        <ol>
+          <li><strong>Read the Received chain bottom-up.</strong> The header&rsquo;s <code>Received:</code> lines trace the message&rsquo;s actual path. The first untrusted hop is where the story begins; everything above it is testimony.</li>
+          <li><strong>Check the trio: SPF, DKIM, DMARC.</strong> Look for <code>Authentication-Results: spf=fail dkim=fail dmarc=fail</code> or, worse, a <em>pass</em> from a domain that is not the domain it claims to be (display-name spoofing &mdash; the oldest trick, still solvent).</li>
+          <li><strong>Age the sender domain.</strong> A domain registered last Tuesday writing about your invoice has nothing to say to you. WHOIS creation date is the cheapest tell in the trade.</li>
+          <li><strong>Unwrap the URLs without clicking them.</strong> Read the href, not the anchor text. Chase every redirect on paper (curl in a sandbox, or a URL-expansion service) &mdash; the final hop is the one that matters.</li>
+          <li><strong>Hash the attachment.</strong> Check the hash against known-bad stores before anyone, anywhere, including you, opens it. <code>invoice.pdf.exe</code> resolves this step instantly.</li>
+          <li><strong>Pivot, then scope.</strong> Subject, sender, attachment hash, URL &mdash; search all four across the mail logs. Phishing rarely comes alone. It comes in batches, like correspondence.</li>
+        </ol>
+        <p class="dim">And the last rite: report it. If you receive a phish, forward it to your security team and delete it. Do not engage the sender. Do not reply, even to be cruel &mdash; especially to be cruel. Cruelty confirms the address is alive.</p>
+      </div>
+    </article>
+
+    <!-- NOTE V -->
+    <article class="note-article reveal" id="note-5">
+      <div class="note-head">
+        <span class="n">NOTE V</span>
+        <h3>Writing Rules for Machines That Never Sleep</h3>
+      </div>
+      <div class="prose">
+        <p>Detection content should be code: versioned, reviewed, tested, and owned. <strong>Sigma</strong> is the generic form in which we write our suspicions, so any SIEM can read them. A rule for the beacon from entry 0005:</p>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>beacon_no_jitter.yml</span><span>sigma</span></div>
+        <pre><span class="k">title</span>: Outbound Beaconing With Zero Jitter
+<span class="k">id</span>: 3a4b1f6e-0333-4333-a333-033333333333
+<span class="k">status</span>: experimental   <span class="c"># everything is experimental here</span>
+<span class="k">description</span>: >
+  Detects hosts making outbound connections at a fixed interval
+  (coefficient of variation &lt; 0.05 over a 1h window).
+<span class="k">references</span>:
+  - https://attack.mitre.org/techniques/T1071/
+<span class="k">tags</span>:
+  - attack.command_and_control
+  - attack.t1071.001
+<span class="k">logsource</span>:
+  <span class="k">category</span>: proxy
+<span class="k">detection</span>:
+  <span class="k">selection</span>:
+    cs-method: <span class="s">'GET'</span>
+    c-uri|re: <span class="s">'^/health$'</span>   <span class="c"># the beacon's one word</span>
+  <span class="k">condition</span>: selection | count() by src_ip &gt; 12 per 1h
+<span class="k">falsepositives</span>:
+  - scheduled telemetry that has given up on disguise
+<span class="k">level</span>: high</pre>
+      </div>
+      <div class="prose">
+        <p>And a <strong>YARA</strong> rule, for when the artifact is a file and the file is quiet:</p>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>invoice_pdf_exe.yar</span><span>yara</span></div>
+        <pre><span class="k">rule</span> Suspicious_Dual_Extension_Lure {
+    <span class="k">meta</span>:
+        description = <span class="s">"executables disguised as documents"</span>
+        author      = <span class="s">"the analyst, provisional"</span>
+        reference   = <span class="s">"journal, entry 0002"</span>
+    <span class="k">strings</span>:
+        $mz   = { 4D 5A }                    <span class="c">// MZ header</span>
+        $pdf  = <span class="s">".pdf"</span> nocase
+        $doc  = <span class="s">".docx"</span> nocase
+    <span class="k">condition</span>:
+        $mz at 0 and any of ($pdf, $doc)
+}</pre>
+      </div>
+      <div class="prose">
+        <p class="dim">Rules are letters to the future. Write them so the future &mdash; tired, at 3 AM, possibly me &mdash; understands why you were suspicious. Version your paranoia. It compounds.</p>
+      </div>
+    </article>
+
+    <!-- NOTE VI -->
+    <article class="note-article reveal" id="note-6">
+      <div class="note-head">
+        <span class="n">NOTE VI</span>
+        <h3>Escalation Is a Form <em>&mdash; mapping to MITRE ATT&amp;CK</em></h3>
+      </div>
+      <div class="prose">
+        <p>An observation nobody can read is not an observation. It is a feeling with a timestamp. Escalation is the act of converting the feeling into a form, and the form everyone accepts is <strong>MITRE ATT&amp;CK</strong> &mdash; the adversary&rsquo;s behavior, classified by tactic and technique, the way the Bureau classifies everything else: thoroughly, and in advance.</p>
+        <p>A usable mapping from tonight&rsquo;s journal:</p>
+        <ul>
+          <li><strong>Initial access</strong> &mdash; T1566.001, spearphishing attachment (<em>the Occupant&rsquo;s invoice</em>)</li>
+          <li><strong>Execution</strong> &mdash; T1204.002, user execution: malicious file (<em>the click from the basement</em>)</li>
+          <li><strong>Persistence</strong> &mdash; T1547.001, registry run keys (<em>what we suspect but cannot yet file</em>)</li>
+          <li><strong>C2</strong> &mdash; T1071.001, web protocols; T1571, non-standard port (<em>the beacon, 300s, no jitter</em>)</li>
+          <li><strong>Exfiltration</strong> &mdash; T1041, exfiltration over C2 channel (<em>fourteen blank pages, high confidence</em>)</li>
+        </ul>
+        <p>The escalation itself should fit on one page and answer five questions, in this order:</p>
+        <ol>
+          <li><strong>What</strong> happened &mdash; one sentence, no adjectives.</li>
+          <li><strong>Where &amp; when</strong> &mdash; hosts, accounts, timestamps with timezone. Always timezone. It is always 03:33 somewhere and never 03:33 anywhere else.</li>
+          <li><strong>Why it matters</strong> &mdash; the asset, the data, the blast radius.</li>
+          <li><strong>What you did</strong> &mdash; containment already applied; evidence preserved, with paths.</li>
+          <li><strong>What you need</strong> &mdash; the single decision you are asking someone else to make.</li>
+        </ol>
+        <p class="dim">File the form even when there is no one to file it with. The filing is the point. The Bureau is built of filings. Also, the form is the only thing here that ever gets completed, and I would like, before the night is out, to complete something.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <span class="small-caps">Navigate</span>
+          <a href="index.html">The Night (home)</a>
+          <a href="journal.html">Journal of Unusuals</a>
+          <a href="notes.html">Field Notes</a>
+          <a href="bureau.html">The Bureau</a>
+        </div>
+        <div class="foot-col">
+          <span class="small-caps">Correspondence</span>
+          <a href="404.html">analyst@melancholisoc.local</a>
+          <a href="404.html">the committee (unformed)</a>
+        </div>
+      </div>
+    </div>
+    <div class="giant-mark" aria-hidden="true">FIELD NOTES</div>
+    <div class="wrap">
+      <div class="foot-legal">
+        <span>&copy; <span data-year>night 2026</span> &mdash; the analyst, provisional</span>
+        <span>unclassified, unfortunately</span>
+        <span>badge 00331 &mdash; basement level 2</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

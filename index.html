@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MELANCHOLISOC — a melancholic night at the SOC</title>
+  <meta name="description" content="The journal of a bored SOC analyst on an endless night shift. The unusuals, the alerts, the forms. Filed in triplicate, read by no one.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8C%98%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-head">
+    <a class="wordmark" href="index.html">MELANCHOLISOC<span class="dot">&#9679;</span></a>
+    <nav class="site-nav">
+      <a href="journal.html">Journal</a>
+      <a href="notes.html">Field Notes</a>
+      <a href="bureau.html">The Bureau</a>
+    </nav>
+    <div class="head-clock"><span data-clock>03:33:00</span></div>
+  </header>
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero wrap">
+    <div class="hero-meta">
+      <span class="small-caps">Case file &mdash; night shift &mdash; day &#8470; <span data-night>1,247</span></span>
+      <span class="small-caps">Location: basement level 2, windowless</span>
+      <span class="small-caps amber">Status: ongoing</span>
+    </div>
+
+    <h1>
+      A Melancholic<br>
+      Night <em>at the</em> <span class="soc">SOC</span>
+    </h1>
+
+    <div class="hero-sub">
+      <p class="type-line"><span data-typewriter></span></p>
+      <span class="scroll-hint">&#8595; descend</span>
+    </div>
+  </section>
+
+  <!-- ============================ MARQUEE ========================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee-track">
+      <span><b>03:33</b> &mdash; beaconing detected, interval 300s, host unknown</span>
+      <span><i>ALERT</i> &mdash; phishing recipient: &ldquo;THE OCCUPANT, THIRD FLOOR&rdquo; &mdash; there is no third floor</span>
+      <span>ticket #4471 &mdash; pending since 2011 &mdash; the system apologizes</span>
+      <span><b>FP</b> &mdash; DLP fired on an empty document titled resignation_letter_FINAL_v7</span>
+      <span>escalation queue length: 1 (it is me)</span>
+      <span>form 12-B requires form 12-B. the committee will review next year</span>
+      <span><b>03:33</b> &mdash; the kettle boiled. logged anyway</span>
+      <span><i>NOTICE</i> &mdash; your vigilance has been noted. no further action will be taken</span>
+    </div>
+  </div>
+
+  <!-- ============================ UNUSUALS ======================== -->
+  <section class="section wrap" id="unusuals">
+    <div class="section-head reveal">
+      <span class="idx">&#167; 01</span>
+      <h2>Tonight&rsquo;s <em>Unusuals</em></h2>
+      <span class="small-caps">filed under duress</span>
+    </div>
+
+    <div class="entries reveal">
+      <article class="entry-card">
+        <span class="num">ENTRY 0001 &mdash; 03:33</span>
+        <h3>The Alert That Was Always There</h3>
+        <p>Every night at 03:33 the same host pings a domain that no longer resolves. It began before my time. My predecessor&rsquo;s predecessor documented it as &ldquo;known behavior.&rdquo; What is known, no one says. I watch it anyway. Watching is the job.</p>
+        <div class="foot">
+          <span>sev: unknown</span>
+          <a href="journal.html#entry-1">read the file &rarr;</a>
+        </div>
+      </article>
+
+      <article class="entry-card">
+        <span class="num">ENTRY 0002 &mdash; 01:47</span>
+        <h3>The Occupant</h3>
+        <p>A phishing email arrived addressed to &ldquo;The Occupant, Third Floor.&rdquo; The building has two floors and a basement where the printers live. Someone clicked regardless. The click originated from the basement. I sit in the basement.</p>
+        <div class="foot">
+          <span>sev: <span class="red">pending review</span></span>
+          <a href="journal.html#entry-2">read the file &rarr;</a>
+        </div>
+      </article>
+
+      <article class="entry-card">
+        <span class="num">ENTRY 0003 &mdash; 04:02</span>
+        <h3>The Beacon</h3>
+        <p>A host is beaconing at exactly 300-second intervals. The C2 resolves to a decommissioned satellite ground station. I cannot escalate: the tree lists only me, and above me, the Committee, which meets once a year and has not yet been formed.</p>
+        <div class="foot">
+          <span>sev: <span class="amber">300s</span></span>
+          <a href="journal.html#entry-5">read the file &rarr;</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================ QUOTE =========================== -->
+  <section class="quote-strip wrap">
+    <blockquote class="reveal">
+      &ldquo;No one is coming. <span class="amber">The alert remains.</span> These are, at last, the same thought.&rdquo;
+      <cite>&mdash; the analyst, entry 0004, 04:12</cite>
+    </blockquote>
+  </section>
+
+  <!-- ============================ FIELD NOTES ===================== -->
+  <section class="section wrap" id="notes">
+    <div class="section-head reveal">
+      <span class="idx">&#167; 02</span>
+      <h2>Field <em>Notes</em></h2>
+      <span class="small-caps">detection as paperwork</span>
+    </div>
+
+    <div class="note-rows reveal">
+      <a class="note-row" href="notes.html#note-1">
+        <span class="n">I</span>
+        <h3>On Beaconing <em>&amp; the comfort of intervals</em></h3>
+        <span class="tag">network / t1071</span>
+      </a>
+      <a class="note-row" href="notes.html#note-2">
+        <span class="n">II</span>
+        <h3>Triage at 3 AM <em>&mdash; a checklist for the tired</em></h3>
+        <span class="tag">process / human factors</span>
+      </a>
+      <a class="note-row" href="notes.html#note-3">
+        <span class="n">III</span>
+        <h3>On False Positives <em>&amp; keeping what little soul remains</em></h3>
+        <span class="tag">tuning / statistics</span>
+      </a>
+      <a class="note-row" href="notes.html#note-4">
+        <span class="n">IV</span>
+        <h3>The Phishing Liturgy <em>&mdash; headers, domains, rites</em></h3>
+        <span class="tag">email / dmarc</span>
+      </a>
+      <a class="note-row" href="notes.html#note-5">
+        <span class="n">V</span>
+        <h3>Writing Rules for Machines That Never Sleep</h3>
+        <span class="tag">sigma / yara</span>
+      </a>
+      <a class="note-row" href="notes.html#note-6">
+        <span class="n">VI</span>
+        <h3>Escalation Is a Form <em>&mdash; mapping to MITRE ATT&amp;CK</em></h3>
+        <span class="tag">reporting / att&amp;ck</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================ BUREAU TEASER =================== -->
+  <section class="section wrap">
+    <div class="section-head reveal">
+      <span class="idx">&#167; 03</span>
+      <h2>The <em>Bureau</em></h2>
+      <span class="small-caps">est. before records began</span>
+    </div>
+    <div class="reveal" style="max-width: 720px;">
+      <p style="font-size: 22px; color: var(--ink);">
+        The Bureau of Observability was established to observe. What it observes, principally, is itself.
+        The analyst reports to the queue. The queue reports to no one. No one files a weekly summary,
+        which is always thorough and always on time.
+      </p>
+      <p style="margin-top: 28px;">
+        <a href="bureau.html" class="small-caps amber">Request access to the org chart &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================ FOOTER ========================== -->
+  <footer class="site-foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <span class="small-caps">Navigate</span>
+          <a href="index.html">The Night (home)</a>
+          <a href="journal.html">Journal of Unusuals</a>
+          <a href="notes.html">Field Notes</a>
+          <a href="bureau.html">The Bureau</a>
+        </div>
+        <div class="foot-col">
+          <span class="small-caps">Filed under</span>
+          <a href="journal.html">loneliness</a>
+          <a href="notes.html">detection</a>
+          <a href="bureau.html">bureaucracy</a>
+          <a href="404.html">pages that do not exist</a>
+        </div>
+        <div class="foot-col">
+          <span class="small-caps">Correspondence</span>
+          <a href="404.html">analyst@melancholisoc.local</a>
+          <a href="404.html">the committee (unformed)</a>
+          <a href="404.html">form 12-B request desk</a>
+        </div>
+      </div>
+    </div>
+    <div class="giant-mark" aria-hidden="true">MELANCHOLISOC</div>
+    <div class="wrap">
+      <div class="foot-legal">
+        <span>&copy; <span data-year>night 2026</span> &mdash; the analyst, provisional</span>
+        <span>no cookies. only crumbs.</span>
+        <span>badge 00331 &mdash; basement level 2</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
